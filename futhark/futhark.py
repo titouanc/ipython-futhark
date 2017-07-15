@@ -13,8 +13,6 @@ def unload_ipython_extension(ipython):
 
 
 def load_ipython_extension(ipython):
-    js = "IPython.CodeCell.config_defaults.highlight_modes['magic_sql'] = {'reg':[/^%%sql/]};"
-    display_javascript(js, raw=True)
     ipython.register_magics(FutharkMagics)
 
 
