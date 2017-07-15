@@ -1,17 +1,22 @@
+#!/usr/bin/env python
+
 from setuptools import setup, find_packages
-import os
 
-here = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(here, 'README.md')).read()
-
-
-version = '1.0.0'
+version = '1.0.1'
+packages = find_packages()
+print(packages)
 
 setup(
+    # Metadata
     name='ipython-futhark',
     version=version,
     description="Futhark language embedding into IPython",
-    long_description=README,
+    long_description_markdown_filename='README.md',
+    keywords='futhark ipython gpu',
+    author='Titouan Christophe',
+    author_email='moiandme@gmail.com',
+    url='https://github.com/titouanc/ipython-futhark',
+    license='MIT',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
@@ -19,15 +24,15 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 2',
     ],
-    keywords='futhark ipython gpu',
-    author='Titouan Christophe',
-    author_email='moiandme@gmail.com',
-    url='https://pypi.python.org/pypi/ipython-futhark',
-    license='MIT',
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
+
+    # Package data
+    packages=find_packages(),
     include_package_data=True,
-    zip_safe=False,
-    install_requires=['numpy', 'ipython>=1.0'],
+    package_data={'': ['README.md', 'Demo.ipynb']},
+    zip_safe=True,
+
+    # Dependencies
+    setup_requires=['setuptools-markdown'],
+    install_requires=['numpy', 'ipython'],
     extras_require={'opencl': ['pyopencl']}
 )
