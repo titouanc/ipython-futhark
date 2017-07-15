@@ -38,7 +38,7 @@ class FutharkMagics(Magics):
     def futhark(self, line, cell):
         # Create temp .fut file
         code_file = NamedTemporaryFile(suffix='.fut')
-        code_file.write(cell)
+        code_file.write(cell.encode('utf-8'))
         code_file.flush()
 
         # Determine file paths and compiler
@@ -49,19 +49,22 @@ class FutharkMagics(Magics):
         name = filename.replace('.fut', '')
         lib_path = code_file.name.replace('.fut', '.py')
 
-        # Compile to python lib and copy here
+        # Compile to python lib with futhark executable
         r, out, err = run_cmd(futhark, "--library", filename, cwd=dirname)
         if err:
             stderr.write(err)
         if out:
             stdout.write(out)
         if r == 0:
-            run_cmd("cp", lib_path, "./")
+            # Move here (cannot import from arbitrary directory)
+            run_cmd("mv", lib_path, "./")
 
-            # Import module then remove source file
+            # Import module, get main class and instantiate one
             mod = import_module(name)
             cls = getattr(mod, name)
             obj = cls()
+
+            # Inject entry points into namespace
             for method in dir(cls):
                 if method.startswith('__') or method.startswith('futhark'):
                     continue
