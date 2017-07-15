@@ -1,5 +1,4 @@
 from IPython.core.magic import magics_class, Magics, cell_magic
-from IPython.display import display_javascript
 from tempfile import NamedTemporaryFile
 from importlib import import_module
 from subprocess import Popen, PIPE
