@@ -1,3 +1,3 @@
-from futhark import load_ipython_extension
+from .futhark import load_ipython_extension
 
 __all__ = ['load_ipython_extension']
