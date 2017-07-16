@@ -16,6 +16,8 @@ Then install ipython-futhark using pip:
 
 ## Example
 
+See [the Notebook demo](http://nbviewer.jupyter.org/github/titouanc/ipython-futhark/blob/master/Demo.ipynb)
+
 ```ipython
 IPython 5.4.1 -- An enhanced Interactive Python.
 ?         -> Introduction and overview of IPython's features.
@@ -41,5 +43,3 @@ Declaration of function main at tmpDWm0Zs.fut:1:5-1:5 declares return type f32, 
 If you find this error message confusing, uninformative, or wrong, please open an issue at https://github.com/HIPERFIT/futhark/issues.
 
 ```
-
-See [the demo](http://nbviewer.jupyter.org/github/titouanc/ipython-futhark/blob/master/Demo.ipynb)
