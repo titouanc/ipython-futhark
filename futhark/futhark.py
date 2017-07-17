@@ -56,6 +56,9 @@ def show_output(fut_file, out, err):
         stdout.write(out)
 
 
+futhark_variable = re.compile(r'[\w_]+_\d+')
+
+
 @magics_class
 class FutharkMagics(Magics):
     def __init__(self, *args, **kwargs):
@@ -102,6 +105,16 @@ class FutharkMagics(Magics):
             filename
         ]
         r, out, err = run_cmd(*cmd, cwd=dirname)
+
+        # fucolor
+        out = out.decode('utf-8')
+        all_vars = futhark_variable.findall(out)
+        all_vars = sorted(set(all_vars), key=all_vars.index)
+        for i, v in enumerate(all_vars):
+            color = (7*i) % 256
+            colored_v = "\033[1;38;5;{}m{}\033[0m".format(color, v)
+            out = out.replace(v, colored_v)
+        out = out.encode('utf-8')
         show_output(fut_file, out, err)
 
     @cell_magic
