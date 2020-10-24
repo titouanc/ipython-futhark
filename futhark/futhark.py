@@ -60,21 +60,19 @@ def show_output(fut_file, out, err):
 class FutharkMagics(Magics):
     def __init__(self, *args, **kwargs):
         super(FutharkMagics, self).__init__(*args, **kwargs)
-        find_executable("futhark")
-        find_executable("futhark-py")
-        find_executable("futhark-pyopencl")
+        find_executable("futhark")        
 
     def compile_futhark(self, line, fut_file):
         # Determine file paths and compiler
         gpu = 'gpu' in line
-        futhark = 'futhark-pyopencl' if gpu else 'futhark-py'
+        to = 'pyopencl' if gpu else 'python'
         dirname = path.dirname(fut_file)
         filename = path.basename(fut_file)
         name = filename.replace('.fut', '')
         lib_path = fut_file.replace('.fut', '.py')
-
+        
         # Compile to python lib with futhark executable
-        r, out, err = run_cmd(futhark, "--library", filename, cwd=dirname)
+        r, out, err = run_cmd("futhark", to, "--library", filename, cwd=dirname)
         show_output(fut_file, out, err)
 
         if r == 0:
